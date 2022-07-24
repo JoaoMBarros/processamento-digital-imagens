@@ -1,3 +1,6 @@
+#Fazer as equações
+#Fazer a equalização
+
 from PIL import Image
 
 def write_pixels_file(image):
