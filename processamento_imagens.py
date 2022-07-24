@@ -8,6 +8,56 @@ def write_pixels_file(image):
     f.write(str_of_pixels)
     f.close()
 
+def get_4_neighbour_path(image):
+    img_height = image.height
+    img_width = image.width
+
+    background = (0, 0, 0, 255)
+    new_4_path_image = Image.new('RGB', (256, 256), background)
+    new_image = new_4_path_image.load()
+
+    for x in range(img_height):
+        for y in range(img_width):
+            coordenadas_vizinhas = [[x, y+1], [x, y-1], [x-1, y], [x+1, y]]
+
+            for vizinho in coordenadas_vizinhas:
+                out_of_range = False
+
+                for aux in vizinho:
+                    if aux < 0 or aux > img_width-1 or aux > img_height-1:
+                        out_of_range = True
+                
+                if(image.getpixel((x, y)) == (255, 255, 255, 255)):
+                    if (not out_of_range and image.getpixel(tuple(vizinho)) == background):
+                        new_image[x, y] = (255, 255, 255, 255)
+
+    new_4_path_image.show()
+
+def get_8_neighbour_path(image):
+    img_height = image.height
+    img_width = image.width
+
+    background = (0, 0, 0, 255)
+    new_8_path_image = Image.new('RGB', (256, 256), background)
+    new_image = new_8_path_image.load()
+
+    for x in range(img_height):
+        for y in range(img_width):
+            coordenadas_vizinhas = [[x, y+1], [x, y-1], [x-1, y], [x+1, y], [x+1, y+1], [x+1, y-1], [x-1, y+1], [x-1, y-1]]
+
+            for vizinho in coordenadas_vizinhas:
+                out_of_range = False
+
+                for aux in vizinho:
+                    if aux < 0 or aux > img_width-1 or aux > img_height-1:
+                        out_of_range = True
+                
+                if(image.getpixel((x, y)) == (255, 255, 255, 255)):
+                    if (not out_of_range and image.getpixel(tuple(vizinho)) == background):
+                        new_image[x, y] = (255, 255, 255, 255)
+
+    new_8_path_image.show()
+
 """This function returns a dictionary with the amount of pixels in each level of color"""    
 def count_image_pixels(image):
     aux = {}
@@ -50,7 +100,7 @@ def get_equalized_pixels_percentage(dict_pixels):
 
     return dict_equalized_pixels_percentage
 
-im = Image.open('PDI/lena_gray.bmp')
+im = Image.open('PDI/folha.png')
 #A imagem tem 65536 pixels
 
 conjunto = (0)
@@ -63,4 +113,6 @@ pixels_cumulative_equalized = get_equalized_pixels_percentage(pixels_cumulative_
 #print(pixels_per_level)
 #print(pixels_percentage)
 #print(pixels_cumulative_percentage)
-print(pixels_cumulative_equalized)
+#print(pixels_cumulative_equalized)
+#get_4_neighbour_path(im)
+#get_8_neighbour_path(im)
