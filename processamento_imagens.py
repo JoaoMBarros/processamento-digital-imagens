@@ -1,6 +1,4 @@
-#Fazer as equações
-#Fazer a equalização
-
+from math import log
 from PIL import Image
 
 def write_pixels_file(image):
@@ -67,8 +65,7 @@ def count_image_pixels(image):
     dict_image_pixels = aux.fromkeys(range(256), 0)
 
     for i in list(image.getdata()):
-        if i in dict_image_pixels.keys():
-            dict_image_pixels[i] = dict_image_pixels[i] + 1
+        dict_image_pixels[i] = dict_image_pixels[i] + 1
     
     return dict_image_pixels
 
@@ -103,7 +100,11 @@ def get_equalized_pixels_percentage(dict_pixels):
 
     return dict_equalized_pixels_percentage
 
-im = Image.open('PDI/folha.png')
+def get_logaritmic_transformation(dict_pixels):
+    L = max(dict_pixels.values())
+    c = (L-1)/(log((), L))
+
+im = Image.open('PDI\lena_gray.bmp')
 #A imagem tem 65536 pixels
 
 conjunto = (0)
